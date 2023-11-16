@@ -13,12 +13,6 @@ type Transaksi = {
     created_at: string;
 }
 
-type Columns = {
-    accessorKey: string;
-    cell: React.ReactElement | null;
-    header: string;
-}
-
 
 const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) => {
     const tableRef = useRef(null)
@@ -44,16 +38,16 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
                 <Table.Root ref={tableRef}>
                     <Table.Header>
                         {
-                            table.getHeaderGroups().map(headerGroup => <Table.Row>
-                                {headerGroup.headers.map((header: any) => <Table.ColumnHeaderCell>{header.column.columnDef.header}</Table.ColumnHeaderCell>)}
+                            table.getHeaderGroups().map(headerGroup => <Table.Row key={headerGroup.id}>
+                                {headerGroup.headers.map((header: any) => <Table.ColumnHeaderCell key={headerGroup.id}>{header.column.columnDef.header}</Table.ColumnHeaderCell>)}
                             </Table.Row>)
                         }
                     </Table.Header>
                     <Table.Body>
                         {
-                            table.getRowModel().rows.map(row => <Table.Row>
+                            table.getRowModel().rows.map(row => <Table.Row key={row.id}>
                                 {
-                                    row.getVisibleCells().map(cell => <Table.Cell>
+                                    row.getVisibleCells().map(cell => <Table.Cell key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </Table.Cell>
                                     )
