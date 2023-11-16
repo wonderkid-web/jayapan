@@ -3,6 +3,7 @@ import { Table } from '@radix-ui/themes'
 import React from 'react'
 
 type Obat = {
+  id:string;
   nama: string;
   jenis: string;
   harga: number;
@@ -30,7 +31,7 @@ export default async function TabelOBat() {
         <Table.Body>
           {
             data?.map((d: Obat) => (
-              <Table.Row>
+              <Table.Row key={d.id}>
                 <Table.RowHeaderCell justify={'center'}>{d.nama}</Table.RowHeaderCell>
                 <Table.Cell justify={'center'}>{d.jenis}</Table.Cell>
                 <Table.Cell justify={'center'}>{d.harga}</Table.Cell>
