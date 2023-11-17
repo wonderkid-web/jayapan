@@ -2,7 +2,7 @@
 import { Button, Table } from '@radix-ui/themes';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useMemo, useRef } from 'react'
-import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { DownloadTableExcel, downloadExcel, useDownloadExcel } from 'react-export-table-to-excel';
 
 
 type Transaksi = {
@@ -19,22 +19,28 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
 
     const data = useMemo(() => datas, [datas])
 
+    console.log(data)
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
 
+
+
+
+    const { onDownload } = useDownloadExcel({
+        currentTableRef: tableRef.current,
+        filename: 'Users table',
+        sheet: 'Users'
+    })
+
+
     if (data) {
         return (
             <div>
-                <DownloadTableExcel
-                    filename={`table-${new Date()}`}
-                    sheet='table-transaksi'
-                    currentTableRef={tableRef.current}
-                >
-                    <Button>Download Excel</Button>
-                </DownloadTableExcel>
+                <Button onClick={onDownload}>Cetak</Button>
                 <Table.Root ref={tableRef}>
                     <Table.Header>
                         {

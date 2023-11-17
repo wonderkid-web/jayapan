@@ -1,5 +1,7 @@
 import supabse from '@/utils/supabse'
 import { Table } from '@radix-ui/themes'
+import { format } from 'path';
+import idLocale from 'date-fns/locale/id';
 import React from 'react'
 
 type Obat = {
@@ -14,6 +16,8 @@ type Obat = {
 export default async function TabelOBat() {
 
   const { data } = await supabse.from('obat').select()
+
+
 
   return (
     <div>
