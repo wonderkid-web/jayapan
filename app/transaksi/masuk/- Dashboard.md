@@ -1,16 +1,16 @@
 - Dashboard
     =get
-- Master Data
-    - Tambah Obat (DONE)
+- Master Data (DONE)
+    - Tambah Obat
         =post
     - Tabel Obat
         =get
-- Transaksi
+- Transaksi (DONE)
     - Masuk
         =get
     - Keluar
         =get
-- Laporan
+- Laporan (DONE)
     - Masuk
         =get
         =convert_pdf

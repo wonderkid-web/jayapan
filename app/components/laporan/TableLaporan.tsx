@@ -1,8 +1,10 @@
 "use client"
-import { Button, Table } from '@radix-ui/themes';
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useMemo, useRef } from 'react'
-import { DownloadTableExcel, downloadExcel, useDownloadExcel } from 'react-export-table-to-excel';
+import { Button, Table, TextField } from '@radix-ui/themes';
+import { OnChangeFn, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
+import { memo, useMemo, useRef, useState } from 'react'
+import { FcDataSheet } from "react-icons/fc";
+import { useDownloadExcel } from 'react-export-table-to-excel';
+import uuid from 'react-uuid';
 
 
 type Transaksi = {
@@ -15,20 +17,27 @@ type Transaksi = {
 
 
 const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) => {
+    const [filter, setFilter] = useState<any>([])
+    const [sorting, setSorting] = useState<any>([])
     const tableRef = useRef(null)
-
     const data = useMemo(() => datas, [datas])
 
-    console.log(data)
+    console.log('test')
 
     const table = useReactTable({
         data,
         columns,
+        state: {
+            globalFilter: filter,
+            sorting: sorting
+        },
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setFilter,
+
     })
-
-
-
 
     const { onDownload } = useDownloadExcel({
         currentTableRef: tableRef.current,
@@ -37,23 +46,30 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
     })
 
 
-    if (data) {
+    if (data && table) {
         return (
             <div>
-                <Button onClick={onDownload}>Cetak</Button>
+                <div className='flex gap-2 flex-col'>
+                    <TextField.Input placeholder='Cari Transaksi...' onChange={(e: any) => setFilter(e.currentTarget.value)} />
+                    <Button className='w-fit self-end' onClick={onDownload} color='crimson'>
+                        <FcDataSheet />
+                        Cetak
+                    </Button>
+                    {filter}
+                </div>
                 <Table.Root ref={tableRef}>
                     <Table.Header>
                         {
-                            table.getHeaderGroups().map(headerGroup => <Table.Row key={headerGroup.id}>
-                                {headerGroup.headers.map((header: any) => <Table.ColumnHeaderCell key={headerGroup.id}>{header.column.columnDef.header}</Table.ColumnHeaderCell>)}
+                            table.getHeaderGroups().map(headerGroup => <Table.Row key={uuid()}>
+                                {headerGroup.headers.map((header: any) => <Table.ColumnHeaderCell key={uuid()}>{header.column.columnDef.header}</Table.ColumnHeaderCell>)}
                             </Table.Row>)
                         }
                     </Table.Header>
                     <Table.Body>
                         {
-                            table.getRowModel().rows.map(row => <Table.Row key={row.id}>
+                            table.getRowModel()?.rows?.map(row => <Table.Row key={uuid()}>
                                 {
-                                    row.getVisibleCells().map(cell => <Table.Cell key={cell.id}>
+                                    row.getVisibleCells().map(cell => <Table.Cell key={uuid()}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </Table.Cell>
                                     )
@@ -62,9 +78,15 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
                         }
                     </Table.Body>
                 </Table.Root>
+                <div className='flex justify-center gap-x-3 mt-2'>
+                    <Button onClick={() => table.setPageIndex(0)}>first page</Button>
+                    <Button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}> {`<--`} </Button>
+                    <Button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}> {`-->`}</Button>
+                    <Button onClick={() => table.setPageIndex(table.getPageCount() - 1)}> last page </Button>
+                </div>
             </div>
         )
     }
 }
 
-export default TableLaporan
+export default memo(TableLaporan)

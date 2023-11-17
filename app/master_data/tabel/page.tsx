@@ -1,8 +1,9 @@
+"use client"
+import TableLaporan from '@/app/components/laporan/TableLaporan';
 import supabse from '@/utils/supabse'
-import { Table } from '@radix-ui/themes'
-import { format } from 'path';
+import { addHours, format } from 'date-fns';
 import idLocale from 'date-fns/locale/id';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 type Obat = {
   id:string;
@@ -13,39 +14,69 @@ type Obat = {
   created_at: string;
 }
 
-export default async function TabelOBat() {
 
-  const { data } = await supabse.from('obat').select()
+const columns = [
+  {
+    accessorKey: "id",
+    header: "ID",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "nama",
+    header: "Nama Obat",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "jenis",
+    header: "Jenis",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "harga",
+    header: "Harga",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "stock",
+    header: "Stock",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "created_at",
+    header: "Dibuat",
+    cell: (props: any) => <p> {props.getValue()}</p>
 
 
+  },
+]
+
+
+export default function TabelOBat() {
+
+  const [data, setData] = useState<Obat[] | any>()
+
+  const getData = async () => {
+    const { data }: { data: any } = await supabse.from('obat').select("*")
+
+    const redefine = data.map((d: any) => ({
+      ...d,
+      harga: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.harga),
+      created_at: format(
+        addHours(new Date(d.created_at), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
+      )
+    }))
+
+    setData(redefine)
+  }
+
+  useEffect(()=>{
+    getData()
+  }, [])
 
   return (
     <div>
-      <Table.Root>
-        <Table.Header>
-          <Table.Row align={'center'}>
-            <Table.ColumnHeaderCell justify={'center'}>Nama Obat</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell justify={'center'}>Jenis</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell justify={'center'}>Harga</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell justify={'center'}>Stock</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell justify={'center'}>Ditambah</Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {
-            data?.map((d: Obat) => (
-              <Table.Row key={d.id}>
-                <Table.RowHeaderCell justify={'center'}>{d.nama}</Table.RowHeaderCell>
-                <Table.Cell justify={'center'}>{d.jenis}</Table.Cell>
-                <Table.Cell justify={'center'}>{d.harga}</Table.Cell>
-                <Table.Cell justify={'center'}>{d.stock}</Table.Cell>
-                <Table.Cell justify={'center'}>{d.created_at}</Table.Cell>
-              </Table.Row>
-            ))
-          }
-        </Table.Body>
-      </Table.Root>
+      <h1 className='text-lg'>Tabel Obat</h1>
+      <TableLaporan columns={columns} datas={data} />
     </div>
   )
 }
