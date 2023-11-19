@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 
-const AuthContext = createContext<any>(undefined)
+export const AuthContext = createContext<any>(null)
 
 export const AuthProvider = ({children} : {children: React.ReactNode}) =>{
     const [isLoggin, setIsLoggin] = useState<Boolean>(false)

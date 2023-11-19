@@ -1,6 +1,6 @@
 "use client"
 import supabse from '@/utils/supabse'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { addHours, format } from 'date-fns'
 import idLocale from 'date-fns/locale/id'
 import TableLaporan from '@/app/components/laporan/TableLaporan'
@@ -16,6 +16,11 @@ const columns = [
   {
     accessorKey: "obatId",
     header: "Obat ID",
+    cell: (props: any) => <p> {props.getValue()}</p>
+  },
+  {
+    accessorKey: "obat.nama",
+    header: "Nama Obat",
     cell: (props: any) => <p> {props.getValue()}</p>
   },
   {
@@ -41,7 +46,9 @@ export default function LaporanMasuk() {
   const [data, setData] = useState()
 
   const getData = async () => {
-    const { data }: { data: any } = await supabse.from('transaksimasuk').select("*")
+    const { data }: { data: any } = await supabse.from('transaksimasuk').select("*, obat(nama)")
+
+    console.log(data)
 
     const redefine = data.map((d: any) => ({
       ...d,

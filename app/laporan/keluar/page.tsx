@@ -20,6 +20,11 @@ export default function LaporanKeluar() {
       cell: (props: any) => <p> {props.getValue()}</p>
     },
     {
+      accessorKey: "obat.nama",
+      header: "Nama Obat",
+      cell: (props: any) => <p> {props.getValue()}</p>
+    },
+    {
       accessorKey: "jumlah",
       header: "Jumlah",
       cell: (props: any) => <p> {props.getValue()}</p>
@@ -40,7 +45,8 @@ export default function LaporanKeluar() {
     },
   ]
   const getData = async () => {
-    const { data }: { data: any } = await supabse.from('transaksikeluar').select("*")
+    const { data }: { data: any } = await supabse.from('transaksikeluar').select("*, obat(nama)")
+    console.log(data)
     setData(data)
   }
 

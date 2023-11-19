@@ -4,7 +4,8 @@ import './globals.css'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { AuthProvider } from './context/authContext';
-
+import Sidebar from './components/sidebar/Sidebar';
+import Navbar from './components/layout/Navbar';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,19 +17,25 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) {
+
+
+
   return (
     <html lang="en">
       <body>
         <AuthProvider>
-          <Theme>
-            <nav>
-              <h1>Jayapan</h1>
-            </nav>
-            <section className="flex min-h-screen justify-center items-center">
-              {children}
-            </section>
+          <Theme accentColor="teal" grayColor="sand" radius="full">
+            <Navbar />
+            <main className='flex gap-2'>
+              <section className='p-4 bg-emerald-600 text-white flex flex-col gap-2'>
+                <Sidebar />
+              </section>
+              <section className="flex min-h-screen justify-center items-center">
+                {children}
+              </section>
+            </main>
           </Theme>
         </AuthProvider>
       </body>

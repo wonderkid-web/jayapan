@@ -1,9 +1,10 @@
 "use client"
 import { Button, Table, TextField } from '@radix-ui/themes';
-import { OnChangeFn, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
-import { memo, useMemo, useRef, useState } from 'react'
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
+import {  memo, useMemo, useRef, useState } from 'react'
 import { FcDataSheet } from "react-icons/fc";
 import { useDownloadExcel } from 'react-export-table-to-excel';
+import { FcNext,FcPrevious } from "react-icons/fc";
 import uuid from 'react-uuid';
 
 
@@ -17,7 +18,7 @@ type Transaksi = {
 
 
 const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) => {
-    const [filter, setFilter] = useState<any>([])
+    const [filter, setFilter] = useState<string>('')
     const [sorting, setSorting] = useState<any>([])
     const tableRef = useRef(null)
     const data = useMemo(() => datas, [datas])
@@ -32,8 +33,8 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
             sorting: sorting
         },
         getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting,
         onGlobalFilterChange: setFilter,
 
@@ -45,29 +46,29 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
         sheet: 'Users'
     })
 
-
     if (data && table) {
         return (
             <div>
                 <div className='flex gap-2 flex-col'>
                     <TextField.Input placeholder='Cari Transaksi...' onChange={(e: any) => setFilter(e.currentTarget.value)} />
-                    <Button className='w-fit self-end' onClick={onDownload} color='crimson'>
-                        <FcDataSheet />
+                    <Button className='w-fit self-end' onClick={onDownload}>
+                        <span className='rounded bg-white'>
+                            <FcDataSheet />
+                        </span>
                         Cetak
                     </Button>
-                    {filter}
                 </div>
                 <Table.Root ref={tableRef}>
                     <Table.Header>
                         {
-                            table.getHeaderGroups().map(headerGroup => <Table.Row key={uuid()}>
+                            table?.getHeaderGroups()?.map(headerGroup => <Table.Row key={uuid()}>
                                 {headerGroup.headers.map((header: any) => <Table.ColumnHeaderCell key={uuid()}>{header.column.columnDef.header}</Table.ColumnHeaderCell>)}
                             </Table.Row>)
                         }
                     </Table.Header>
                     <Table.Body>
                         {
-                            table.getRowModel()?.rows?.map(row => <Table.Row key={uuid()}>
+                            table?.getRowModel()?.rows?.map(row => <Table.Row key={uuid()}>
                                 {
                                     row.getVisibleCells().map(cell => <Table.Cell key={uuid()}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -80,8 +81,8 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
                 </Table.Root>
                 <div className='flex justify-center gap-x-3 mt-2'>
                     <Button onClick={() => table.setPageIndex(0)}>first page</Button>
-                    <Button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}> {`<--`} </Button>
-                    <Button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}> {`-->`}</Button>
+                    <Button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}> <FcPrevious /> </Button>
+                    <Button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}><FcNext /></Button>
                     <Button onClick={() => table.setPageIndex(table.getPageCount() - 1)}> last page </Button>
                 </div>
             </div>
