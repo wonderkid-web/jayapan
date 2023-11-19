@@ -1,4 +1,5 @@
 "use client"
+import AuthTemplate from '@/app/components/auth/AuthTemplate'
 import InputTransaksi from '@/app/components/transaksi/InputTransaksi'
 import supabse from '@/utils/supabse'
 import { useEffect, useState } from 'react'
@@ -18,6 +19,7 @@ export default function TransaksiKeluar() {
 
   return (
     <div className='flex flex-wrap justify-center gap-3'>
+      <AuthTemplate />
       <h1>Transaksi Keluar</h1>
       {box && <InputTransaksi data={box} typeTransaksi='transaksikeluar'/>}
     </div>

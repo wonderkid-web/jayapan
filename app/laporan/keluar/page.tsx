@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { addHours, format } from 'date-fns'
 import idLocale from 'date-fns/locale/id'
 import TableLaporan from '@/app/components/laporan/TableLaporan'
+import AuthTemplate from '@/app/components/auth/AuthTemplate'
 
 export default function LaporanKeluar() {
   const [data, setData] = useState()
@@ -57,6 +58,8 @@ export default function LaporanKeluar() {
   if (data) {
     return (
       <div>
+        <AuthTemplate />
+
         <h1>Table Transaksi Keluar</h1>
         <TableLaporan columns={columns} datas={data} />
       </div>

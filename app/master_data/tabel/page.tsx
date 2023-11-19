@@ -1,4 +1,5 @@
 "use client"
+import AuthTemplate from '@/app/components/auth/AuthTemplate';
 import TableLaporan from '@/app/components/laporan/TableLaporan';
 import { useAuthContext } from '@/app/context/authContext';
 import supabse from '@/utils/supabse'
@@ -92,6 +93,7 @@ export default function TabelOBat() {
 
   return (
     <div className='flex flex-col items-center w-screen scale-1.5'>
+      <AuthTemplate />
       <h1 className='text-lg'>Tabel Obat</h1>
       <TableLaporan columns={columns} datas={data} />
     </div>
