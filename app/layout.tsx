@@ -29,10 +29,10 @@ export default function RootLayout({
           <Theme accentColor="teal" grayColor="sand" radius="full">
             <Navbar />
             <main className='flex gap-2'>
-              <section className='p-4 bg-emerald-600 text-white flex flex-col gap-2'>
+              <section className='p-4 w-[200px] bg-emerald-600 text-white flex flex-col gap-2'>
                 <Sidebar />
               </section>
-              <section className="flex min-h-screen justify-center items-center">
+              <section className=" min-h-screen justify-center items-center">
                 {children}
               </section>
             </main>

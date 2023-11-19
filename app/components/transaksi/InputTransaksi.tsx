@@ -51,7 +51,7 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                 if (typeTransaksi === "transaksimasuk") {
                     const obat_ = {
                         ...obat,
-                        stock: currentStock.find((stock:CurrentStock) => stock.id === obat.id).stock += obat.stock
+                        stock: currentStock.find((stock: CurrentStock) => stock.id === obat.id).stock += obat.stock
                     }
 
                     const transaksi = {
@@ -60,11 +60,11 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                         jumlah: obat.stock,
                         nominal: obat.stock * +obat.harga
                     }
-                    return {obat_, transaksi}
+                    return { obat_, transaksi }
                 } else {
                     const obat_ = {
                         ...obat,
-                        stock: currentStock.find((stock:CurrentStock) => stock.id === obat.id).stock -= obat.stock
+                        stock: currentStock.find((stock: CurrentStock) => stock.id === obat.id).stock -= obat.stock
                     }
 
                     const transaksi = {
@@ -73,17 +73,17 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                         jumlah: obat.stock,
                         nominal: obat.stock * +obat.harga
                     }
-                    return {obat_, transaksi}
+                    return { obat_, transaksi }
                 }
             });
-            
-            const allObat = unique.map((obat:any) =>obat.obat_)
-            const allTransaksi = unique.map((obat:any) =>obat.transaksi)
+
+            const allObat = unique.map((obat: any) => obat.obat_)
+            const allTransaksi = unique.map((obat: any) => obat.transaksi)
             console.log(allObat)
             console.log(allTransaksi)
             try {
                 const { data: dataObat, error: errorObat } = await supabse.from("obat").upsert(allObat).select()
-                const {data, error} = await supabse.from(typeTransaksi).insert(allTransaksi)
+                const { data, error } = await supabse.from(typeTransaksi).insert(allTransaksi)
 
                 console.log(dataObat)
                 console.log(errorObat)
@@ -94,8 +94,8 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                     router.push('/dashboard')
                     setTemp([])
                 }
-            }catch(err:any){
-                console.error('Error at Input Transaksi: ', err.message );
+            } catch (err: any) {
+                console.error('Error at Input Transaksi: ', err.message);
             }
         } else {
             alert('kamu belum mengisi apapun')
@@ -115,18 +115,20 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
 
     return (
         <>
-            {data && data.map((obat: Obat) => (
-                <div key={obat.id} className='flex flex-col text-center bg-slate-100 p-2 rounded-md'>
-                    <h4>{obat.nama}</h4>
-                    {obat.stock === 0 && <Text>Stock kamu lagi habis</Text>}
-                    <div className="input flex gap-2">
-                        <Button>-</Button>
-                        {obat.stock}
-                        <TextField.Input disabled={obat.stock === 0 && typeTransaksi == "transaksikeluar"} placeholder="110" variant='classic' width={200} onChange={(e) => handleInput(e, obat)} />
-                        <Button>+</Button>
+            <div className='grid xl:grid-cols-4 sm:grid-cols-1 gap-2 mx-auto'>
+                {data && data.map((obat: Obat) => (
+                    <div key={obat.id} className='flex flex-col justify-center items-center flex-wrap text-center bg-slate-100 p-2 rounded-md'>
+                        <h4>{obat.nama}</h4>
+                        <span>{obat.stock}</span>
+                        {obat.stock === 0 && <Text>Stock kamu lagi habis</Text>}
+                        <div className="input flex gap-2">
+                            <Button>-</Button>
+                            <TextField.Input disabled={obat.stock === 0 && typeTransaksi == "transaksikeluar"} placeholder="0" variant='classic' width={200} onChange={(e) => handleInput(e, obat)} />
+                            <Button>+</Button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
             <Button onClick={handleUpdate}>Kirim</Button>
         </>
     )

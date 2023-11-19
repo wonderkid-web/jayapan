@@ -92,7 +92,7 @@ export default function TabelOBat() {
   }, [isLoggin, router])
 
   return (
-    <div className='flex flex-col items-center w-screen scale-1.5'>
+    <div className='flex flex-col items-center justify-center'>
       <AuthTemplate />
       <h1 className='text-lg'>Tabel Obat</h1>
       <TableLaporan columns={columns} datas={data} />

@@ -5,7 +5,7 @@ import supabse from '@/utils/supabse'
 import { useEffect, useState } from 'react'
 
 export default function TransaksiKeluar() {
-  const [box, setBox] = useState<any[]|null>()
+  const [box, setBox] = useState<any[] | null>()
 
   const getData = async () => {
     const { data } = await supabse.from('obat').select("*")
@@ -18,10 +18,10 @@ export default function TransaksiKeluar() {
   }, [])
 
   return (
-    <div className='flex flex-wrap justify-center gap-3'>
+    <div className='mx-auto w-[900px] flex flex-col gap-2'>
       <AuthTemplate />
       <h1>Transaksi Keluar</h1>
-      {box && <InputTransaksi data={box} typeTransaksi='transaksikeluar'/>}
+      {box && <InputTransaksi data={box} typeTransaksi='transaksikeluar' />}
     </div>
   )
 }

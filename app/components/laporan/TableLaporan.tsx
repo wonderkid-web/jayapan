@@ -48,7 +48,7 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
 
     if (data && table) {
         return (
-            <div>
+            <div className='mx-auto'>
                 <div className='flex gap-2 flex-col'>
                     <TextField.Input placeholder='Cari Transaksi...' onChange={(e: any) => setFilter(e.currentTarget.value)} />
                     <Button className='w-fit self-end' onClick={onDownload}>
