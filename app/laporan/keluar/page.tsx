@@ -47,7 +47,6 @@ export default function LaporanKeluar() {
   ]
   const getData = async () => {
     const { data }: { data: any } = await supabse.from('transaksikeluar').select("*, obat(nama)")
-    console.log(data)
     setData(data)
   }
 

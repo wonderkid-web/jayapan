@@ -47,7 +47,7 @@ const InputObat = () => {
 
     return (
         <form onSubmit={handleSubmit} ref={form}>
-            <div className='flex flex-col gap-y-2 w-[250px]'>
+            <div className=' flex flex-col gap-y-2 w-[100%]'>
                 <TextField.Input placeholder="Nama Obat" name='nama' />
                 <TextField.Input placeholder="Stock" type='number' name='stock' />
                 <TextField.Input placeholder="Harga" name='harga' />

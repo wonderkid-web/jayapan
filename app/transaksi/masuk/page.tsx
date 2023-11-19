@@ -18,7 +18,7 @@ export default function TransaksiMasuk() {
   }, [])
 
   return (
-    <div className='mx-auto w-[900px] flex flex-col gap-2'>
+    <div className='flex flex-col gap-2'>
       <AuthTemplate />
       <h1>Transaksi Masuk</h1>
       {box && <InputTransaksi data={box} typeTransaksi='transaksimasuk' />}
