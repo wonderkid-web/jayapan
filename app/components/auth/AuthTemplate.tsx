@@ -7,18 +7,14 @@ const AuthTemplate = () => {
     const { isLoggin } = useAuthContext()
     const router = useRouter()
 
-    if(router){
-        useEffect(() => {
-            console.log(`its from template!!!`, isLoggin)
-            if(!isLoggin) router.push('/login')
-        }, [isLoggin])
-    
-        return (
-            <div>
-               
-            </div>
-        )
-    }
+    useEffect(() => {
+        if (!isLoggin) router.push('/login')
+    }, [isLoggin, router])
+
+    return (
+       <></>
+    )
+
 
 }
 

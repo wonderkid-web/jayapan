@@ -88,7 +88,7 @@ export default function TabelOBat() {
   useEffect(() => {
     console.log(`from tambah`, isLoggin)
     if (!isLoggin) router.push('/login')
-  }, [isLoggin])
+  }, [isLoggin, router])
 
   return (
     <div className='flex flex-col items-center w-screen scale-1.5'>

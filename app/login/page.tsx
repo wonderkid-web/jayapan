@@ -27,7 +27,7 @@ export default function Page() {
         if (isLoggin) {
             router.push('/master_data/tabel')
         }
-    }, [isLoggin])
+    }, [isLoggin, router])
 
     if (isLoggin) {
         return (
