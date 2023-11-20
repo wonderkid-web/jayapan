@@ -10,7 +10,7 @@ export default function TransaksiKeluar() {
   const [box, setBox] = useState<any[] | null>()
 
   const getData = async () => {
-    const { data } = await supabse.from('obat').select("nama")
+    const { data } = await supabse.from('obat').select("*")
     return data
   }
 

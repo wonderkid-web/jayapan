@@ -119,7 +119,7 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                 {data && data.map((obat: Obat) => (
                     <div key={obat.id} className='flex flex-col justify-center items-center flex-wrap text-center bg-slate-100 p-2 rounded-md'>
                         <h4>{obat.nama}</h4>
-                        <span>{obat.stock}</span>
+                        <span className='font-bold'>{obat.stock}</span>
                         {obat.stock === 0 && <Text>Stock kamu lagi habis</Text>}
                         <div className="input flex gap-2">
                             {/* <Button>-</Button> */}
