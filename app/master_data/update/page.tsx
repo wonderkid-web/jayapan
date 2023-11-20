@@ -17,7 +17,7 @@ type Obat = {
 }
 
 
-export default function page() {
+export default function Update() {
     const [box, setBox] = useState([])
     const [harga, setHarga] = useState<any[]>([])
     const form = useRef(null)
