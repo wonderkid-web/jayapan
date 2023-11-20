@@ -45,7 +45,7 @@ export const ListUpdateHargaObat = ({ datas, getData }: { datas: Obat[], getData
                     <p><span className="font-bold">Stock:</span> {d.stock}</p>
                     <Dialog.Root>
                         <Dialog.Trigger>
-                            <Button>Edit Harga Obat</Button>
+                            <Button color='jade'>Edit Harga Obat</Button>
                         </Dialog.Trigger>
 
                         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -70,7 +70,7 @@ export const ListUpdateHargaObat = ({ datas, getData }: { datas: Obat[], getData
                                             </Button>
                                         </Dialog.Close>
                                         <Dialog.Close>
-                                            <Button type='submit'>Save</Button>
+                                            <Button color='jade' type='submit'>Save</Button>
                                         </Dialog.Close>
                                     </div>
                                 </Flex>
