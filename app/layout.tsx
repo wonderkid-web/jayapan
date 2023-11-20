@@ -26,7 +26,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className='bg-slate-100'>
         <AuthProvider>
           <Theme accentColor="teal" grayColor="sand" radius="full">
             <Navbar />
@@ -34,7 +34,7 @@ export default function RootLayout({
               <section className='p-4 w-[200px] bg-emerald-600 text-white flex flex-col gap-2'>
                 <Sidebar />
               </section>
-              <section className=" min-h-screen flex justify-center mt-12 w-[90%]">
+              <section className="min-h-[90vh] flex justify-center mt-12 w-[90%]">
                 <div className='absolute top-[65px] right-[20px]'>
                   <PathName />
                 </div>

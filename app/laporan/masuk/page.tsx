@@ -49,8 +49,6 @@ export default function LaporanMasuk() {
   const getData = async () => {
     const { data }: { data: any } = await supabse.from('transaksimasuk').select("*, obat(nama)")
 
-    console.log(data)
-
     const redefine = data.map((d: any) => ({
       ...d,
       nominal: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.nominal),
