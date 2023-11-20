@@ -16,7 +16,7 @@ const Sidebar = () => {
 
     let routes : Route[] = []
 
-    if (path !== '/login') {
+    if (path !== '/login' && path !== '/obat') {
         routes = [
             { path: '/', label: 'Home' },
             { path: '/dashboard', label: 'Dashboard' },
@@ -24,6 +24,7 @@ const Sidebar = () => {
             { path: '/laporan/masuk', label: 'Laporan Masuk' },
             { path: '/master_data/tabel', label: 'Tabel Obat' },
             { path: '/master_data/tambah', label: 'Tambah Obat' },
+            { path: '/master_data/update', label: 'Update Harga Obat' },
             { path: '/transaksi/keluar', label: 'Transaksi Keluar' },
             { path: '/transaksi/masuk', label: 'Transaksi Masuk' },
         ];

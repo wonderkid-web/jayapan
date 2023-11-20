@@ -23,8 +23,6 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
     const tableRef = useRef(null)
     const data = useMemo(() => datas, [datas])
 
-    console.log('test')
-
     const table = useReactTable({
         data,
         columns,

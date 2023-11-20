@@ -122,9 +122,9 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                         <span>{obat.stock}</span>
                         {obat.stock === 0 && <Text>Stock kamu lagi habis</Text>}
                         <div className="input flex gap-2">
-                            <Button>-</Button>
+                            {/* <Button>-</Button> */}
                             <TextField.Input disabled={obat.stock === 0 && typeTransaksi == "transaksikeluar"} placeholder="0" variant='classic' width={200} onChange={(e) => handleInput(e, obat)} />
-                            <Button>+</Button>
+                            {/* <Button>+</Button> */}
                         </div>
                     </div>
                 ))}

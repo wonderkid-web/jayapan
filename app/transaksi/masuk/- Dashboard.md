@@ -1,4 +1,10 @@
 - Dashboard
+    - Total Obat
+    - Obat Terakhir di tambahkan
+    - Total Transaksi masuk
+    - Total Transaksi keluar
+    - Transaski Terakhir masuk
+    - Transaski Terakhir keluar
     =get
 - Master Data (DONE)
     - Tambah Obat
