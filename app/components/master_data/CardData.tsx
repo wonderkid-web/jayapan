@@ -18,6 +18,8 @@ type Transaksi = {
   nominal: number;
 }
 
+export const revalidate = 50
+
 
 export default async function CardData() {
 
@@ -37,10 +39,10 @@ export default async function CardData() {
   const diff = (target: string) => {
 
     // Mendapatkan selisih waktu dalam format jarak waktu dari sekarang
-    const jarakWaktu = formatDistanceToNow(parseISO(target), { locale: localeId });
+    const jarakWaktu = formatDistanceToNow(addHours(parseISO(target), 7), { locale: localeId });
 
     // Format waktu diberikan menjadi jam:menit
-    const waktuDiberikanFormatted = format(parseISO(target), "HH:mm", { locale: localeId });
+    const waktuDiberikanFormatted = format(addHours(parseISO(target), 7), "HH:mm", { locale: localeId });
 
     // Mencetak pesan dengan format yang diinginkan
     const result = `${waktuDiberikanFormatted}, ${jarakWaktu} yang lalu`
