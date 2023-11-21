@@ -1,14 +1,13 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { useAuthContext } from "../context/authContext"
-import { useEffect, useRef } from "react"
-import Link from "next/link"
+import { useRef } from "react"
 import { Button, TextField } from "@radix-ui/themes"
 
 export default function Page() {
-    const { isLoggin, setIsLoggin } = useAuthContext()
     const router = useRouter()
-    const form : any = useRef(null)
+    const form: any = useRef(null)
+    const status = localStorage.getItem('status')
+
 
     const handleLogin = ((e: any) => {
         e.preventDefault()
@@ -16,20 +15,14 @@ export default function Page() {
         const { username, password } = Object.fromEntries(formData)
 
         if (username === "admin" && password === "admin") {
-            setIsLoggin(true)
+            localStorage.setItem('status', "true")
+            router.push('/dashboard')
         }
 
         form.current.reset()
     })
 
-    useEffect(() => {
-        console.log(`from login`, isLoggin)
-        if (isLoggin) {
-            router.push('/master_data/tabel')
-        }
-    }, [isLoggin, router])
-
-    if (isLoggin) {
+    if (status) {
         return (
             <h1 className="text-xl">Kamu sudah login...</h1>
         )
@@ -38,12 +31,11 @@ export default function Page() {
     return (
         <div className="flex flex-col items-center gap-y-3 w-screen">
             <h1>LOGIN</h1>
-            <Link href={'/dashboard'}>go to dashboard without login!</Link>
             <form ref={form} onSubmit={handleLogin} className='flex flex-col gap-y-2 w-[250px]'>
 
                 <TextField.Input placeholder="Username.." name='username' />
                 <TextField.Input placeholder="Password" type="password" name='password' />
-                <Button>Tambah Obat</Button>
+                <Button>Login</Button>
                 {/* {success &&
                     <Callout.Root>
                         <Callout.Icon>

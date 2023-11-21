@@ -86,11 +86,6 @@ export default function TabelOBat() {
     getData()
   }, [])
 
-  useEffect(() => {
-    console.log(`from tambah`, isLoggin)
-    if (!isLoggin) router.push('/login')
-  }, [isLoggin, router])
-
   return (
     <div className='flex flex-col items-center justify-center mt-[-100px]'>
       <AuthTemplate />
