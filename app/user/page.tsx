@@ -6,6 +6,7 @@ import { FcDisapprove, FcFullTrash, FcLike } from 'react-icons/fc'
 import idLocale from 'date-fns/locale/id'
 import Image from 'next/image'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
+import uuid from 'react-uuid'
 
 type User = {
     id: string;
@@ -48,7 +49,7 @@ export default function Page() {
         <div className="grid xl:grid-cols-3 xl:grid-rows-4 sm:grid-cols-1 gap-4">
             {
                 user && user.map((u: User) => (
-                    <div className="bg-white min-w-[250px] rounded-lg shadow-md p-5 gap-3 max-w-xs flex flex-col">
+                    <div  key={uuid()} className="bg-white min-w-[250px] rounded-lg shadow-md p-5 gap-3 max-w-xs flex flex-col">
                         <div className="flex justify-around items-center">
                             <Image className='rounded rounded-md' src={`https://dosen.unimma.ac.id/public/foto/anonym.jpg`} width={50} height={50} alt='anonym' />
                             <div className="scale-150">
