@@ -1,24 +1,59 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { useRef } from "react"
-import { Button, TextField } from "@radix-ui/themes"
+import { useEffect, useRef, useState } from "react"
+
+import { Button, Callout, TextField } from "@radix-ui/themes"
+import supabse from "@/utils/supabse"
+import { PostgrestSingleResponse } from "@supabase/supabase-js"
+import { FcDisclaimer } from "react-icons/fc"
+
+type User = {
+    username: string;
+    password: string;
+}
 
 export default function Page() {
+    const [status, setStatus] = useState<any>("")
+    const [user, setUser] = useState<User[] | null>([])
+    const [err, setError] = useState<boolean>(false)
     const router = useRouter()
     const form: any = useRef(null)
-    const status = localStorage.getItem('status')
 
+    useEffect(() => {
+        getAllUser()
+        const status = localStorage.getItem('status')
+        setStatus(status)
+    }, [])
+
+    const getAllUser = async () => {
+        try {
+            const { data } = await supabse.from('akun').select('username, password')
+            setUser(data)
+            console.log(data)
+        } catch (e: any) {
+            console.log('gagal get All User', e.message)
+        }
+    }
 
     const handleLogin = ((e: any) => {
         e.preventDefault()
         const formData = new FormData(e.target)
-        const { username, password } = Object.fromEntries(formData)
-
-        if (username === "admin" && password === "admin") {
-            localStorage.setItem('status', "true")
-            router.push('/dashboard')
+        const { username, password }: any = Object.fromEntries(formData)
+        const allUsername = user?.map(u => u.username)
+        console.log(allUsername)
+        if (allUsername?.includes(username)) {
+            const checkUser = user?.find(u => u.username === username)
+            if (checkUser?.username === username && checkUser?.password === password) {
+                localStorage.setItem("status", "true")
+                router.push('/dashboard')
+            } else {
+                setError(true)
+                setTimeout(() => setError(false), 2500)
+            }
+        } else {
+            setError(true)
+            setTimeout(() => setError(false), 2500)
         }
-
         form.current.reset()
     })
 
@@ -45,17 +80,18 @@ export default function Page() {
                             Kamu berhasil menambahkan obat baru.
                         </Callout.Text>
                     </Callout.Root>
-                }
-                {error &&
+                } */}
+                {
+                    err &&
                     <Callout.Root color='red'>
                         <Callout.Icon>
                             <FcDisclaimer />
                         </Callout.Icon>
                         <Callout.Text>
-                            Kamu gagal menambahkan obat baru.
+                            Username atau Password kamu Salah!
                         </Callout.Text>
                     </Callout.Root>
-                } */}
+                }
             </form>
 
         </div>

@@ -85,13 +85,8 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
                 const { data: dataObat, error: errorObat } = await supabse.from("obat").upsert(allObat).select()
                 const { data, error } = await supabse.from(typeTransaksi).insert(allTransaksi)
 
-                console.log(dataObat)
-                console.log(errorObat)
-                console.log(data)
-                console.log(error)
-
                 if (dataObat || error) {
-                    router.push('/dashboard')
+                    router.prefetch('/dashboard')
                     setTemp([])
                 }
             } catch (err: any) {

@@ -27,6 +27,8 @@ const Sidebar = () => {
             { path: '/master_data/update', label: 'Update Harga Obat' },
             { path: '/transaksi/keluar', label: 'Transaksi Keluar' },
             { path: '/transaksi/masuk', label: 'Transaksi Masuk' },
+            { path: '/user', label: 'Akun Pengguna' },
+            { path: '/user/tambah', label: 'Tambah Pengguna' },
         ];
     }
 
