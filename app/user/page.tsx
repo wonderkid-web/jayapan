@@ -49,7 +49,7 @@ export default function Page() {
         <div className="grid xl:grid-cols-3 xl:grid-rows-4 sm:grid-cols-1 gap-4">
             {
                 user && user.map((u: User) => (
-                    <div  key={uuid()} className="bg-white min-w-[250px] rounded-lg shadow-md p-5 gap-3 max-w-xs flex flex-col">
+                    <div key={u.id} className="bg-white min-w-[250px] rounded-lg shadow-md p-5 gap-3 max-w-xs flex flex-col">
                         <div className="flex justify-around items-center">
                             <Image className='rounded rounded-md' src={`https://dosen.unimma.ac.id/public/foto/anonym.jpg`} width={50} height={50} alt='anonym' />
                             <div className="scale-150">
@@ -71,7 +71,7 @@ export default function Page() {
                                                 </Button>
                                             </AlertDialog.Cancel>
                                             <AlertDialog.Action>
-                                                <Button onClick={()=>handleDelete(u.id)} variant="solid" color="red">
+                                                <Button variant="solid" color="red">
                                                     hapus
                                                 </Button>
                                             </AlertDialog.Action>

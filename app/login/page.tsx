@@ -29,7 +29,6 @@ export default function Page() {
         try {
             const { data } = await supabse.from('akun').select('username, password')
             setUser(data)
-            console.log(data)
         } catch (e: any) {
             console.log('gagal get All User', e.message)
         }
