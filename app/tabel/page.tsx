@@ -15,5 +15,6 @@ export default async function page() {
   if(dataObat !== null)
   return (
     <ObatTable data={dataObat} columns={columns} />
+    
   )
 }

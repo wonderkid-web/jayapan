@@ -1,9 +1,11 @@
 "use client"
 import supabse from '@/utils/supabse';
-import { Button, Text, TextField } from '@radix-ui/themes'
+import { Button, Callout, Text, TextField } from '@radix-ui/themes'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { FcApproval, FcDisclaimer } from 'react-icons/fc';
 import uuid from 'react-uuid';
+import { toast } from 'sonner';
 
 type Obat = {
     id: string;
@@ -79,15 +81,33 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
 
             const allObat = unique.map((obat: any) => obat.obat_)
             const allTransaksi = unique.map((obat: any) => obat.transaksi)
-            console.log(allObat)
-            console.log(allTransaksi)
             try {
                 const { data: dataObat, error: errorObat } = await supabse.from("obat").upsert(allObat).select()
-                const { data, error } = await supabse.from(typeTransaksi).insert(allTransaksi)
+                const { data, error } = await supabse.from(typeTransaksi).insert(allTransaksi).select()
 
-                if (dataObat || error) {
-                    router.prefetch('/dashboard')
+                if (dataObat && data) {
+                    toast(
+                        <Callout.Root style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                            <Callout.Icon>
+                                <FcApproval />
+                            </Callout.Icon>
+                            <Callout.Text>
+                                Transaksi Berhasil!
+                            </Callout.Text>
+                        </Callout.Root>
+                        , { duration: 2000 })
                     setTemp([])
+                } else if (errorObat && error) {
+                    toast(
+                        <Callout.Root style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                            <Callout.Icon>
+                                <FcDisclaimer />
+                            </Callout.Icon>
+                            <Callout.Text>
+                               Transaksi Gagal!
+                            </Callout.Text>
+                        </Callout.Root>
+                        , { duration: 2000 })
                 }
             } catch (err: any) {
                 console.error('Error at Input Transaksi: ', err.message);
@@ -111,14 +131,14 @@ const InputTransaksi = ({ data, typeTransaksi }: { data: Obat[], typeTransaksi: 
     return (
         <>
             <div className='grid xl:grid-cols-4 sm:grid-cols-1 gap-2 mx-auto'>
-                {data && data.map((obat: Obat) => (
+                {data && data.map((obat: Obat, i:number) => (
                     <div key={obat.id} className='flex flex-col justify-center items-center flex-wrap text-center bg-slate-100 p-2 rounded-md'>
                         <h4>{obat.nama}</h4>
                         <span className='font-bold'>{obat.stock}</span>
                         {obat.stock === 0 && <Text>Stock kamu lagi habis</Text>}
                         <div className="input flex gap-2">
                             {/* <Button>-</Button> */}
-                            <TextField.Input disabled={obat.stock === 0 && typeTransaksi == "transaksikeluar"} placeholder="0" variant='classic' width={200} onChange={(e) => handleInput(e, obat)} />
+                            <TextField.Input value={temp[i]?.stock} disabled={obat.stock === 0 && typeTransaksi == "transaksikeluar"} placeholder="0" variant='classic' width={200} onChange={(e) => handleInput(e, obat)} />
                             {/* <Button>+</Button> */}
                         </div>
                     </div>

@@ -76,7 +76,7 @@ export default function Page() {
                                 <h3 className="text-lg">{u.username}</h3>
                                 <AlertDialog.Root>
                                     <AlertDialog.Trigger>
-                                        <Button size={'1'} color="red">hapus</Button>
+                                        <Button size={'1'} color="red" style={{background: '#e5484d'}}>hapus</Button>
                                     </AlertDialog.Trigger>
                                     <AlertDialog.Content style={{ maxWidth: 450 }}>
                                         <AlertDialog.Title>Hapus akun ini</AlertDialog.Title>
@@ -91,7 +91,7 @@ export default function Page() {
                                                 </Button>
                                             </AlertDialog.Cancel>
                                             <AlertDialog.Action>
-                                                <Button variant="solid" color="red" onClick={() => handleDelete(u.id)}>
+                                                <Button variant="solid" color="red" onClick={() => handleDelete(u.id)} style={{background: '#e5484d'}}>
                                                     hapus
                                                 </Button>
                                             </AlertDialog.Action>
