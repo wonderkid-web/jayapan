@@ -2,10 +2,10 @@
 import supabse from '@/utils/supabse'
 import { addHours, format, parseISO } from 'date-fns'
 import React, { useEffect, useState } from 'react'
-import { FcDisapprove, FcFullTrash, FcLike } from 'react-icons/fc'
+import { FcApproval, FcDisapprove, FcDisclaimer, FcFullTrash, FcLike } from 'react-icons/fc'
 import idLocale from 'date-fns/locale/id'
 import Image from 'next/image'
-import { AlertDialog, Button, Flex } from '@radix-ui/themes'
+import { AlertDialog, Button, Callout, Flex } from '@radix-ui/themes'
 import uuid from 'react-uuid'
 import { toast } from 'sonner'
 
@@ -40,15 +40,27 @@ export default function Page() {
     const handleDelete = async (id: string) => {
         const { error } = await supabse.from('akun').delete().eq('id', id).select()
         if (error) {
-            alert('akun gagal di hapus')
-            toast.error('Gagal ngehapus akun!');
+            toast(
+                <Callout.Root style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                    <Callout.Icon>
+                        <FcDisclaimer />
+                    </Callout.Icon>
+                    <Callout.Text>
+                        Akun gagal terhapus.
+                    </Callout.Text>
+                </Callout.Root>
+                , { duration: 2000 })
         } else {
-            toast.success('Kamu berhasil menghapus akun!', {
-                classNames: {
-                    toast: '!bg-emerald-400',
-                    title: '!text-white',
-                },
-            })
+            toast(
+                <Callout.Root style={{display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                    <Callout.Icon>
+                        <FcApproval />
+                    </Callout.Icon>
+                    <Callout.Text>
+                        Akun terhapus.
+                    </Callout.Text>
+                </Callout.Root>
+                , { duration: 2000 })
             getAllUser()
         }
     }

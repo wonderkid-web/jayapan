@@ -2,8 +2,9 @@
 import supabse from '@/utils/supabse'
 import React, { useEffect, useRef, useState } from 'react'
 import uuid from 'react-uuid'
-import { Button, Dialog, Flex, TextField } from '@radix-ui/themes'
+import { Button, Callout, Dialog, Flex, TextField } from '@radix-ui/themes'
 import { toast } from 'sonner'
+import { FcApproval, FcDisclaimer } from 'react-icons/fc'
 
 
 type Obat = {
@@ -37,23 +38,31 @@ export const ListUpdateHargaObat = () => {
         const { data, error } = await supabse.from('obat').update(harga).eq('id', id).select()
         if (data) {
             getData()
-            toast.success('Kamu berhasil update harga!', {
-                classNames: {
-                    toast: '!bg-emerald-400',
-                    title: '!text-white',
-                },
-            })
-        }else{
-            toast.error('Kamu gagal update harga!', {
-                classNames: {
-                    toast: '!bg-rose-400',
-                    title: '!text-white',
-                },
-            })
+            toast(
+                <Callout.Root style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                    <Callout.Icon>
+                        <FcApproval />
+                    </Callout.Icon>
+                    <Callout.Text>
+                        Kamu berhasil menambahkan obat baru.
+                    </Callout.Text>
+                </Callout.Root>
+                , { duration: 2000 })
+        } else {
+            toast(
+                <Callout.Root style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+                    <Callout.Icon>
+                        <FcDisclaimer />
+                    </Callout.Icon>
+                    <Callout.Text>
+                        Username atau Password kamu Salah!
+                    </Callout.Text>
+                </Callout.Root>
+                , { duration: 2000 })
         }
     }
 
-    const currency = (harga:any) =>{
+    const currency = (harga: any) => {
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(harga)
     }
 
@@ -68,13 +77,13 @@ export const ListUpdateHargaObat = () => {
                         } </p> */}
                     <p className="mb-2"><span className="font-bold">Harga:</span>
                         {
-                           currency(d.harga)
+                            currency(d.harga)
                         }</p>
                     <p className="mb-2"><span className="font-bold">Jenis:</span> {d.jenis}</p>
                     <p><span className="font-bold">Stock:</span> {d.stock}</p>
                     <Dialog.Root>
                         <Dialog.Trigger>
-                            <Button color='jade' style={{background:'rgb(16 185 129)'}}>update</Button>
+                            <Button color='jade' style={{ background: 'rgb(16 185 129)' }}>update</Button>
                         </Dialog.Trigger>
 
                         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -100,7 +109,7 @@ export const ListUpdateHargaObat = () => {
                                             </Button>
                                         </Dialog.Close>
                                         <Dialog.Close>
-                                            <Button color='jade' type='submit' style={{background:'rgb(16 185 129)'}}>Save</Button>
+                                            <Button color='jade' type='submit' style={{ background: 'rgb(16 185 129)' }}>Save</Button>
                                         </Dialog.Close>
                                     </div>
                                 </Flex>
