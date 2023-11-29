@@ -49,7 +49,7 @@ export function ObatTable<Tdata, Tvalue>({
                 {
                     table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map(row => (
-                            <Table.Row id={row.id}>
+                            <Table.Row id={row.id} key={row.id}>
                                 {
                                     row.getVisibleCells().map(cell=>(
                                         <Table.Cell key={cell.id}>
