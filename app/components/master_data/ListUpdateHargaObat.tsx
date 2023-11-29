@@ -74,7 +74,7 @@ export const ListUpdateHargaObat = () => {
                     <p><span className="font-bold">Stock:</span> {d.stock}</p>
                     <Dialog.Root>
                         <Dialog.Trigger>
-                            <Button color='jade'>update</Button>
+                            <Button color='jade' style={{background:'rgb(16 185 129)'}}>update</Button>
                         </Dialog.Trigger>
 
                         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -100,7 +100,7 @@ export const ListUpdateHargaObat = () => {
                                             </Button>
                                         </Dialog.Close>
                                         <Dialog.Close>
-                                            <Button color='jade' type='submit'>Save</Button>
+                                            <Button color='jade' type='submit' style={{background:'rgb(16 185 129)'}}>Save</Button>
                                         </Dialog.Close>
                                     </div>
                                 </Flex>
