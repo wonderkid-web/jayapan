@@ -7,6 +7,7 @@ import idLocale from 'date-fns/locale/id'
 import Image from 'next/image'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import uuid from 'react-uuid'
+import { toast } from 'sonner'
 
 type User = {
     id: string;
@@ -20,7 +21,7 @@ export default function Page() {
 
     useEffect(() => {
         getAllUser()
-    })
+    }, [])
 
     const getAllUser = async () => {
         try {
@@ -37,12 +38,19 @@ export default function Page() {
 
 
     const handleDelete = async (id: string) => {
-            const {error} = await supabse.from('akun').delete().eq('id', id).select()
-            if(error){
-                alert('akun gagal di hapus')
-            }else{
-                alert('akun berhasil di hapus')
-            }
+        const { error } = await supabse.from('akun').delete().eq('id', id).select()
+        if (error) {
+            alert('akun gagal di hapus')
+            toast.error('Gagal ngehapus akun!');
+        } else {
+            toast.success('Kamu berhasil menghapus akun!', {
+                classNames: {
+                    toast: '!bg-emerald-400',
+                    title: '!text-white',
+                },
+            })
+            getAllUser()
+        }
     }
 
     return (
@@ -61,7 +69,7 @@ export default function Page() {
                                     <AlertDialog.Content style={{ maxWidth: 450 }}>
                                         <AlertDialog.Title>Hapus akun ini</AlertDialog.Title>
                                         <AlertDialog.Description size="2">
-                                           {`Apakah kamu yakin ingin mengahpus akun ${u.username}.?`}
+                                            {`Apakah kamu yakin ingin mengahpus akun ${u.username}.?`}
                                         </AlertDialog.Description>
 
                                         <Flex gap="3" mt="4" justify="end">
@@ -71,7 +79,7 @@ export default function Page() {
                                                 </Button>
                                             </AlertDialog.Cancel>
                                             <AlertDialog.Action>
-                                                <Button variant="solid" color="red">
+                                                <Button variant="solid" color="red" onClick={() => handleDelete(u.id)}>
                                                     hapus
                                                 </Button>
                                             </AlertDialog.Action>

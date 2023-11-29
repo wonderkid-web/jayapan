@@ -79,7 +79,7 @@ const Sidebar = () => {
                                 </span>
                                 {route.title}
                             </div>
-                            <ul className='ml-4 overflow-hidden bg-emerald-700 rounded-md list-disc list-inside text-sm'>
+                            <ul className='ml-4 overflow-hidden bg-emerald-700 rounded-md text-sm'>
                                 {route.list.map((l, i) =>
                                     <li className='p-1 my-1 truncate' key={i}>
                                         <Link className={`${path === l.path && `bg-white text-emerald-500 p-1 rounded transition-1`} `} key={uuid()} href={l?.path}>

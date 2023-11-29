@@ -51,7 +51,7 @@ export default function Update() {
         <div className='flex flex-col gap-2'>
             <h1>Update Harga Obat</h1>
             <TextField.Input placeholder='Cari Obat...' onChange={handleSearch} />
-            <ListUpdateHargaObat datas={box} getData={getData} />
+            <ListUpdateHargaObat />
         </div>
     )
 }

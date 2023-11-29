@@ -1,23 +1,34 @@
 "use client"
 import supabse from '@/utils/supabse'
-import { addHours, format } from 'date-fns'
 import React, { useEffect, useRef, useState } from 'react'
 import uuid from 'react-uuid'
-import localeId from "date-fns/locale/id"
-import { Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes'
+import { Button, Dialog, Flex, TextField } from '@radix-ui/themes'
+import { toast } from 'sonner'
 
 
 type Obat = {
     id: string;
     nama: string;
     jenis: string;
-    harga: number;
+    harga: number | string;
     stock: number;
     created_at: string;
 }
 
-export const ListUpdateHargaObat = ({ datas, getData }: { datas: Obat[], getData: () => Promise<void> }) => {
+export const revalidate = 0;
+
+export const ListUpdateHargaObat = () => {
+    const [obat, setObat] = useState<Obat[]>([])
     const form = useRef(null)
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const getData: () => void = async () => {
+        const { data }: any = await supabse.from('obat').select("*")
+        setObat(data)
+    }
 
     const handleUpdateHarga = async (e: any, id: string) => {
         e.preventDefault()
@@ -26,26 +37,44 @@ export const ListUpdateHargaObat = ({ datas, getData }: { datas: Obat[], getData
         const { data, error } = await supabse.from('obat').update(harga).eq('id', id).select()
         if (data) {
             getData()
+            toast.success('Kamu berhasil update harga!', {
+                classNames: {
+                    toast: '!bg-emerald-400',
+                    title: '!text-white',
+                },
+            })
+        }else{
+            toast.error('Kamu gagal update harga!', {
+                classNames: {
+                    toast: '!bg-rose-400',
+                    title: '!text-white',
+                },
+            })
         }
     }
+
+    const currency = (harga:any) =>{
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(harga)
+    }
+
     return (
         <div className='grid grid-cols-4 grid-rows-4 items-between gap-2'>
-            {datas && datas?.map((d: Obat) => (
+            {obat && obat?.map((d: Obat) => (
                 <div key={uuid()} className="border border-gray-300 h-fit rounded-lg p-4 max-w-xs flex flex-col gap-1">
                     <h3 className="text-lg text-white bg-emerald-500 w-fit p-1 rounded font-bold mb-2">{d.nama}</h3>
-                    <p className="self-end text-sm text-gray-500 italic">
+                    {/* <p className="self-end text-sm text-gray-500 italic">
                         {
                             format(addHours(new Date(d.created_at), 7), "dd-MM-yyyy HH:mm", { locale: localeId })
-                        } </p>
+                        } </p> */}
                     <p className="mb-2"><span className="font-bold">Harga:</span>
                         {
-                            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.harga)
+                           currency(d.harga)
                         }</p>
                     <p className="mb-2"><span className="font-bold">Jenis:</span> {d.jenis}</p>
                     <p><span className="font-bold">Stock:</span> {d.stock}</p>
                     <Dialog.Root>
                         <Dialog.Trigger>
-                            <Button color='jade'>Edit Harga Obat</Button>
+                            <Button color='jade'>update</Button>
                         </Dialog.Trigger>
 
                         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -60,7 +89,8 @@ export const ListUpdateHargaObat = ({ datas, getData }: { datas: Obat[], getData
                                         <TextField.Input
                                             name='harga'
                                             type='number'
-                                            placeholder="Masukan angka lebih dari 0"
+                                            placeholder={currency(d.harga) as string}
+                                            min={0}
                                         />
                                     </label>
                                     <div className='flex justify-end gap-2'>

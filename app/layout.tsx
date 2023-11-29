@@ -8,6 +8,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import Navbar from './components/layout/Navbar';
 import Head from 'next/head';
 import PathName from './components/layout/PathName';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='bg-slate-100'>
+        <Toaster/>
         <AuthProvider>
           <Theme accentColor="teal" grayColor="sand" radius="full">
             <Navbar />
