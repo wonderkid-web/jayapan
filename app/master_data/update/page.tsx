@@ -49,7 +49,8 @@ export default function Update() {
 
     return (
         <div className='flex flex-col gap-2'>
-            <h1>Manajemen Data Obat</h1>
+      <h1 className="text-center text-2xl mb-3">Fungsionalitas Data Obat</h1>
+
             <TextField.Input placeholder='Cari Obat...' onChange={handleSearch} />
             <ListUpdateHargaObat />
         </div>
