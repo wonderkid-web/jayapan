@@ -36,7 +36,7 @@ export default function RootLayout({
           <Theme accentColor="teal" grayColor="sand" radius="full">
             <Navbar />
             <main className='flex gap-2'>
-              <section className={`${pathname.includes('/login') && 'hidden'} 'p-4 w-[200px] bg-emerald-600 text-white flex flex-col gap-2 rounded-md relative left-4'`}>
+              <section className={`${pathname.includes('/login') && 'hidden'} p-4 w-[200px] bg-emerald-600 text-white flex flex-col gap-2 rounded-md ml-7 `}>
                 <Sidebar />
               </section>
               <section className="min-h-[90vh] flex justify-center mt-12 w-[90%]">

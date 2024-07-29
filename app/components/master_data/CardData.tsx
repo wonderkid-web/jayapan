@@ -36,13 +36,13 @@ export default async function CardData() {
   const pengeluaran = total_transaksi_masuk.reduce((acc: number, curr: Transaksi) => acc + curr.nominal, 0)
   const pemasukan = total_transaksi_keluar.reduce((acc: number, curr: Transaksi) => acc + curr.nominal, 0)
 
-  console.log("obat_terakhir:", obat_terakhir);
-console.log("total_transaksi_masuk:", total_transaksi_masuk[0].sum); // Access sum from first element
-console.log("total_transaksi_keluar:", total_transaksi_keluar[0].sum); // Access sum from first element
-console.log("transaksi_masuk_terlama:", transaksi_masuk_terlama);
-console.log("transaksi_masuk_terbaru:", transaksi_masuk_terbaru);
-console.log("transaksi_keluar_terlama:", transaksi_keluar_terlama);
-console.log("transaksi_keluar_terbaru:", transaksi_keluar_terbaru);
+//   console.log("obat_terakhir:", obat_terakhir);
+// console.log("total_transaksi_masuk:", total_transaksi_masuk[0].sum); // Access sum from first element
+// console.log("total_transaksi_keluar:", total_transaksi_keluar[0].sum); // Access sum from first element
+// console.log("transaksi_masuk_terlama:", transaksi_masuk_terlama);
+// console.log("transaksi_masuk_terbaru:", transaksi_masuk_terbaru);
+// console.log("transaksi_keluar_terlama:", transaksi_keluar_terlama);
+// console.log("transaksi_keluar_terbaru:", transaksi_keluar_terbaru);
 
   const diff = (target: string) => {
 
