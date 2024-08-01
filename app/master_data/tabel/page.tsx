@@ -102,7 +102,7 @@ export default function TabelOBat() {
   
         }
   
-        return <button onClick={()=>handleDelete(id)}>delete</button>
+        return <button className='px-2 py-1 text-white rounded-sm hover:scale-105 bg-red-500' onClick={()=>handleDelete(id)}>delete</button>
       }
     },
   ]
