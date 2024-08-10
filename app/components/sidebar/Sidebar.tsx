@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
-import { FcConferenceCall, FcDocument, FcRefresh, FcStatistics, FcViewDetails } from 'react-icons/fc';
+import { FcConferenceCall, FcDocument, FcRefresh, FcRules, FcStatistics, FcViewDetails } from 'react-icons/fc';
 import uuid from 'react-uuid';
 
 type List = {
@@ -62,6 +62,13 @@ const Sidebar = () => {
                 list: [
                     { path: '/user', label: 'Akun Pengguna' },
                     { path: '/user/tambah', label: 'Tambah Pengguna' },
+                ]
+            },
+            {
+                title: "Menu Kasir",
+                icon: <FcRules />,
+                list: [
+                    { path: '/kasir', label: 'Kasir' },
                 ]
             },
         ];
