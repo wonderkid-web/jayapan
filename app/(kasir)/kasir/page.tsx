@@ -58,7 +58,7 @@ function OrderItem({ name, quantity, price, onRemove }: any) {
   );
 }
 
-export default function Update() {
+export default function Kasir() {
   const [products, setProducts] = useState<Obat[]>([]);
   const [orders, setOrders] = useState<Obat[]>([]);
 
