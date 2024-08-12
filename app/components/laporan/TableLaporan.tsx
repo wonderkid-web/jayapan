@@ -23,29 +23,30 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
     const tableRef = useRef(null)
     const data = useMemo(() => datas, [datas])
 
-    const filteredData = useMemo(() => {
-        return data?.filter((item) => {
-            const date = new Date(item.created_at);
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear().toString();
+    // const filteredData = useMemo(() => {
+    //     return data?.filter((item) => {
+    //         const date = new Date(item.created_at);
+    //         const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    //         const year = date.getFullYear().toString();
             
-            return (
-                (monthFilter === '' || month === monthFilter) &&
-                (yearFilter === '' || year === yearFilter) &&
-                (filter === '' || 
-                 columns.some((col: any) => 
-                    // @ts-ignore
-                    String(item[col.accessorKey])
-                        .toLowerCase()
-                        .includes(filter.toLowerCase())
-                 )
-                )
-            );
-        });
-    }, [data, filter, monthFilter, yearFilter, columns]);
+    //         return (
+    //             (monthFilter === '' || month === monthFilter) &&
+    //             (yearFilter === '' || year === yearFilter) &&
+    //             (filter === '' || 
+    //              columns.some((col: any) => 
+    //                 // @ts-ignore
+    //                 String(item[col.accessorKey])
+    //                     .toLowerCase()
+    //                     .includes(filter.toLowerCase())
+    //              )
+    //             )
+    //         );
+    //     });
+    // }, [data, filter, monthFilter, yearFilter, columns]);
 
     const table = useReactTable({
-        data: filteredData,
+        data,
+        // data: filteredData,
         columns,
         state: {
             sorting: sorting
