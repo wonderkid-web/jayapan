@@ -10,6 +10,8 @@ import drug from "/public/drugs.png";
 import uuid from "react-uuid";
 import { toast } from "sonner";
 import { FcApproval, FcDisclaimer } from "react-icons/fc";
+import { Button } from "@/components/ui/button";
+import Receipt from "@/app/components/laporan/Receipt";
 
 type Obat = {
   id: string;
@@ -31,11 +33,13 @@ function ProductCard({ image, name, price, onClick, stock }: any) {
         alt={name}
         className="w-full h-32 sm:h-48 object-cover"
       />
-      
+
       <div className="p-4 flex flex-col relative">
         <h3 className="font-bold text-lg">{name}</h3>
         <p className="text-gray-600">Rp {price.toLocaleString()}</p>
-        <p className="text-white rounded-md px-2 py-1 self-end top-5 absolute bg-green-700">STOCK: {stock}</p>
+        <p className="text-white rounded-md px-2 py-1 self-end top-5 absolute bg-green-700">
+          STOCK: {stock}
+        </p>
       </div>
     </div>
   );
@@ -61,9 +65,11 @@ function OrderItem({ name, quantity, price, onRemove }: any) {
 export default function Kasir() {
   const [products, setProducts] = useState<Obat[]>([]);
   const [orders, setOrders] = useState<Obat[]>([]);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   const getData = async () => {
     const { data }: any = await supabse.from("obat").select("*");
+    console.log(data);
     return data;
   };
 
@@ -105,13 +111,12 @@ export default function Kasir() {
 
   const handleTransaksiKeluar = async () => {
     for (const obat of orders) {
-      
       // @ts-ignore
-      const {stock:oldStock} = products.find(product=> product.id == obat.id)
-          
+      const { stock: oldStock } = products.find(
+        (product) => product.id == obat.id
+      );
+
       const newStock = Number(oldStock) - obat.stock;
-
-
 
       if (newStock < 0) {
         toast(
@@ -171,22 +176,24 @@ export default function Kasir() {
       }
     }
 
+
     // Refresh data
     getData().then((data) => {
       setProducts(data);
       setOrders([]);
     });
+
+    setShowReceipt(false);
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-center text-2xl mb-3">Fungsionalitas Data Obat</h1>
       <TextField.Input placeholder="Cari Obat..." onChange={handleSearch} />
-
       <div className="flex mt-4">
         <div className="w-3/4 pr-4">
           <div className="grid grid-cols-3 gap-4">
-            {products.map((product) => (
+            {products?.map((product) => (
               <ProductCard
                 key={product.id}
                 image="/path/to/default-image.jpg" // Ganti dengan URL gambar produk sebenarnya
@@ -217,14 +224,26 @@ export default function Kasir() {
                 .toLocaleString()}
             </h3>
             <button
-              className="bg-red-500 text-white p-2 rounded mt-2"
-              onClick={handleTransaksiKeluar}
+              className="bg-green-500 ml-4 text-white p-2 rounded mt-2"
+              onClick={() => setShowReceipt((prev) => !prev)}
             >
-              Bayar
+              Lihat Struk
             </button>
           </div>
         </div>
       </div>
+      {showReceipt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <Receipt
+            handleTransaksiKeluar={handleTransaksiKeluar}
+            orders={orders}
+            onClose={() => {
+              setShowReceipt(false);
+              setOrders([]); // Clear the orders after closing the receipt
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
