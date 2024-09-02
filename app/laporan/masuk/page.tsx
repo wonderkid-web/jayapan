@@ -35,8 +35,9 @@ const columns = [
   {
     accessorKey: "created_at",
     header: "Dibuat",
-    cell: (props: any) => <p> {props.getValue()}</p>
-
+    cell: (props: any) => <p> {format(
+      addHours(new Date(props.getValue()), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
+    )}</p>
 
   },
 ]
@@ -47,15 +48,16 @@ export default function LaporanMasuk() {
   const getData = async () => {
     const { data }: { data: any } = await supabse.from('transaksimasuk').select("*")
 
-    const redefine = data.map((d: any) => ({
-      ...d,
-      nominal: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.nominal),
-      created_at: format(
-        addHours(new Date(d.created_at), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
-      )
-    }))
+    // const redefine = data.map((d: any) => ({
+    //   ...d,
+    //   nominal: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.nominal),
+    //   created_at: format(
+    //     addHours(new Date(d.created_at), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
+    //   )
+    // }))
 
-    setData(redefine)
+    // setData(redefine)
+    setData(data)
   }
 
   useEffect(() => {

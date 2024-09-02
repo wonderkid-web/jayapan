@@ -23,7 +23,7 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
     const tableRef = useRef(null)
     const data = useMemo(() => datas, [datas])
 
-    const filteredData = useMemo(() => {
+    const filteredData = useMemo(() => {  
         return data?.filter((item) => {
             const date = new Date(item.created_at);
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -31,7 +31,7 @@ const TableLaporan = ({ datas, columns }: { datas: Transaksi[], columns: any }) 
             
             return (
                 (monthFilter === '' || month === monthFilter) &&
-                (yearFilter === '' || year === yearFilter) &&
+                (yearFilter === '' || year === yearFilter) && 
                 (filter === '' || 
                  columns.some((col: any) => 
                     // @ts-ignore
