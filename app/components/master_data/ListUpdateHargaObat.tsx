@@ -286,12 +286,13 @@ export const ListUpdateHargaObat = () => {
               </Dialog.Content>
             </Dialog.Root>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-full">
               <Dialog.Root>
                 <Dialog.Trigger>
                   <Button
                     color="jade"
                     style={{ background: "rgb(16 185 129)" }}
+                    className="w-full"
                   >
                     masuk
                   </Button>
@@ -334,7 +335,7 @@ export const ListUpdateHargaObat = () => {
                 </Dialog.Content>
               </Dialog.Root>
 
-              <Dialog.Root>
+              {/* <Dialog.Root>
                 <Dialog.Trigger>
                   <Button
                     color="jade"
@@ -379,7 +380,7 @@ export const ListUpdateHargaObat = () => {
                     </Flex>
                   </form>
                 </Dialog.Content>
-              </Dialog.Root>
+              </Dialog.Root> */}
             </div>
           </div>
         ))}
