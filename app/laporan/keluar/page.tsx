@@ -60,9 +60,6 @@ export default function LaporanKeluar() {
         <AuthTemplate />
 
         <h1>Table Transaksi Keluar</h1>
-        <pre>
-          {JSON.stringify(data, null, 2)}
-        </pre>
         <TableLaporan columns={columns} datas={data} />
       </div>
     )
