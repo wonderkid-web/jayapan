@@ -3,7 +3,6 @@ import AuthTemplate from '@/app/components/auth/AuthTemplate';
 
 import { useAuthContext } from '@/app/context/authContext';
 import supabse from '@/utils/supabse'
-import { Button } from '@radix-ui/themes';
 import { addHours, format } from 'date-fns';
 import idLocale from 'date-fns/locale/id';
 import dynamic from 'next/dynamic';
@@ -42,9 +41,6 @@ export default function TabelOBat() {
       return {
         ...d,
         harga: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(d.harga),
-        created_at: format(
-          addHours(new Date(d.created_at), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
-        )
       }
     })
 
@@ -85,7 +81,9 @@ export default function TabelOBat() {
     {
       accessorKey: "created_at",
       header: "Dibuat",
-      cell: (props: any) => <p> {props.getValue()}</p>
+      cell: (props: any) => <p> {format(
+        addHours(new Date(props.getValue()), 7), "dd-MM-yyyy HH:mm", { locale: idLocale }
+      )}</p>
     },
     {
       accessorKey: "id",

@@ -2,7 +2,7 @@
 
 import { Table, TextField } from "@radix-ui/themes"
 import { useReactTable, getCoreRowModel, ColumnDef, flexRender, getFilteredRowModel, ColumnFiltersState } from "@tanstack/react-table"
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
 
 interface DataTableProps<Tdata, Tvalue> {
     columns: ColumnDef<Tdata, Tvalue>[],
