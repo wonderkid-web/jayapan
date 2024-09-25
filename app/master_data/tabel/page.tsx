@@ -1,14 +1,16 @@
 "use client"
 import AuthTemplate from '@/app/components/auth/AuthTemplate';
-import TableLaporan from '@/app/components/laporan/TableLaporan';
+
 import { useAuthContext } from '@/app/context/authContext';
 import supabse from '@/utils/supabse'
 import { Button } from '@radix-ui/themes';
 import { addHours, format } from 'date-fns';
 import idLocale from 'date-fns/locale/id';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from 'sonner';
+const TableLaporan = dynamic(() => import('@/app/components/laporan/TableLaporan'), { ssr: false })
 
 type Obat = {
   id: string;

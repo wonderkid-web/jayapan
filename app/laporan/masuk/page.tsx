@@ -3,8 +3,9 @@ import supabse from '@/utils/supabse'
 import { useEffect, useState } from 'react'
 import { addHours, format } from 'date-fns'
 import idLocale from 'date-fns/locale/id'
-import TableLaporan from '@/app/components/laporan/TableLaporan'
 import AuthTemplate from '@/app/components/auth/AuthTemplate'
+import dynamic from 'next/dynamic'
+const TableLaporan = dynamic(() => import('@/app/components/laporan/TableLaporan'), { ssr: false })
 
 const columns = [
   // {
